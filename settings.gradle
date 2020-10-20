@@ -1,0 +1,3 @@
+include ':offerWall'
+include ':app'
+rootProject.name = "MindGeeks"
