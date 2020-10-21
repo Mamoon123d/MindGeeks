@@ -1,4 +1,8 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="earning_steps">Earning Steps</string>
+    <string name="dummy_data">hghdghgdshghd</string>
+    <string name="instructions">Instructions</string>
+    <string name="start_this_offer_now">Start this offer now</string>
 </resources>
