@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="6dp"
+    android:id="@+id/offer_list"
     tools:context=".offersList">
 
    <androidx.recyclerview.widget.RecyclerView

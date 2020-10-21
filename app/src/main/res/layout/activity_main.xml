@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.mindgeeks.offerwall.offersList"
+    <com.mindgeeks.offerwall.OffersWall
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
