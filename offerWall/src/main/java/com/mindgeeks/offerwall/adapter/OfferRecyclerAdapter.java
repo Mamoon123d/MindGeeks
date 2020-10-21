@@ -1,7 +1,10 @@
 package com.mindgeeks.offerwall.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mindgeeks.offerwall.OfferDetailsActivity;
 import com.mindgeeks.offerwall.R;
 import com.mindgeeks.offerwall.model.OffersListData;
 import com.squareup.picasso.Picasso;
@@ -108,18 +112,18 @@ public class OfferRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                     viewHolder0.card.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                           /* Intent intent = new Intent(context, OfferActivity.class);
+                            Intent intent = new Intent(context, OfferDetailsActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putInt(OfferActivity.OFFER_ID, data.getOfferId());
-                            bundle.putString(OfferActivity.DESCRIPTION, data.getDescription());
-                            bundle.putString(OfferActivity.TITLE, data.getOfferName());
-                            bundle.putString(OfferActivity.REWARDS, data.getOfferAmount());
-                            bundle.putString(OfferActivity.IMAGE_URL, data.getImageUrl());
-                            bundle.putString(OfferActivity.PACKAGE_NAME, data.getPackageName());
+                            bundle.putInt(OfferDetailsActivity.OFFER_ID, data.getOfferId());
+                            bundle.putString(OfferDetailsActivity.DESCRIPTION, data.getDescription());
+                            bundle.putString(OfferDetailsActivity.TITLE, data.getOfferName());
+                            bundle.putString(OfferDetailsActivity.REWARDS, data.getOfferAmount());
+                            bundle.putString(OfferDetailsActivity.IMAGE_URL, data.getImageUrl());
+                            bundle.putString(OfferDetailsActivity.PACKAGE_NAME, data.getPackageName());
 
                             intent.putExtras(bundle);
                             //((Activity)context).setResult(Activity.RESULT_OK);
-                            ((Activity)context).startActivityForResult(intent, MainActivity.REQUEST_CODE);*/
+                            ((Activity)context).startActivityForResult(intent, OfferDetailsActivity.REQUEST_CODE);
 
                         }
                     });

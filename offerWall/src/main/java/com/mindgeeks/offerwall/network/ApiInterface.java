@@ -1,5 +1,7 @@
 package com.mindgeeks.offerwall.network;
 
+import com.mindgeeks.offerwall.model.OfferDetailData;
+import com.mindgeeks.offerwall.model.OfferEventData;
 import com.mindgeeks.offerwall.model.OffersListData;
 import com.mindgeeks.offerwall.model.UserRequest;
 
@@ -13,6 +15,11 @@ public interface ApiInterface {
     @POST("scofferList")
     Call<OffersListData> getOfferList(@Body UserRequest userRequest);
 
+    @POST("scofferDetails")
+    Call<OfferDetailData>getOfferDetails(@Body UserRequest userRequest);
+
+    @POST("scofferClicked")
+    Call<OfferEventData>getOfferEvent(@Body UserRequest userRequest);
    /* @POST("scofferDetails")
     Call<OfferDetailData>getOfferDetails(@Body UserRequest userRequest);
 

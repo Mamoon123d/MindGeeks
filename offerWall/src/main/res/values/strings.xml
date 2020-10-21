@@ -5,4 +5,8 @@
     <string name="dummy_data">hghdghgdshghd</string>
     <string name="instructions">Instructions</string>
     <string name="start_this_offer_now">Start this offer now</string>
+    <string name="rupees">₹ </string>
+    <string name="upto">Upto</string>
+    <string name="title">Title</string>
+    <string name="value">Values</string>
 </resources>
