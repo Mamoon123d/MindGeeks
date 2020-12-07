@@ -3,8 +3,10 @@
     package="com.mindgeeks.offerwall">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application>
-        <activity android:name=".OfferDetailsActivity"></activity>
+        <activity android:name=".OfferActivity"></activity>
+        <activity android:name=".OfferDetailsActivity" />
     </application>
 
 </manifest>

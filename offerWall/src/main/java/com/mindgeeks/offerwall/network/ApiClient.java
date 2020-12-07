@@ -15,7 +15,7 @@ public class ApiClient {
     // http://fcc8f1b8a382.ngrok.io/api/v1/
     // static String url="http://492e2beb84bf.ngrok.io/api/v1/";
     //static String url=" https://cashmantra.app/api/v1/";
-    static String url = "https://spinpay.app/api/v1/";
+    static String url = "https://starcash.app/api/v1/";
 
     private static Retrofit getRetrofit() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();

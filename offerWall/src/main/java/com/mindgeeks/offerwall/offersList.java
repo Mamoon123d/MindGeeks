@@ -1,19 +1,20 @@
 package com.mindgeeks.offerwall;
 
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.preference.PreferenceManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.mindgeeks.offerwall.adapter.OfferRecyclerAdapter;
 import com.mindgeeks.offerwall.model.OffersListData;
@@ -35,15 +36,34 @@ public class offersList extends Fragment {
     private RecyclerView recyclerView;
     private boolean isNetworkOk;
     List<OffersListData.Offer> list;
+    private FragmentActivity mActivity;
+    private String securityToken;
+    private static final String securityToken_Key = "securityToken";
+
     public offersList() {
         // Required empty public constructor
     }
 
+    public static offersList newInstance(String mSecurityToken) {
+        offersList fragment = new offersList();
+        Bundle args = new Bundle();
+        args.putString(securityToken_Key, mSecurityToken);
+        fragment.setArguments(args);
+        // Log.d("TAG", "newInstance: "+mSecurityToken);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     getOfferWall();
+        if (getArguments() != null) {
+            securityToken = getArguments().getString(securityToken_Key);
+            Log.d("TAG", "newInstance: " + securityToken);
+            //  mParam2 = getArguments().getString(ARG_PARAM2);
+
+        }
+        //Log.d("TAG", "newInstance:  "+getArguments().getString(securityToken_Key));
+
     }
 
     public void getOfferWall() {
@@ -55,11 +75,12 @@ public class offersList extends Fragment {
                    list = new ArrayList<>();
                    list = response.body().getOffers();
                    setRecycler();
+                   Toast.makeText(mActivity, "" + securityToken, Toast.LENGTH_SHORT).show();
                }
             }
 
             @Override
-            public void onFailure(Call<OffersListData> call, Throwable t) {
+            public void onFailure(@NotNull Call<OffersListData> call, Throwable t) {
 
             }
         });
@@ -68,7 +89,10 @@ public class offersList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         recyclerView = view.findViewById(R.id.offer_recycler);
+        getOfferWall();
+
 
     }
 
@@ -79,25 +103,36 @@ public class offersList extends Fragment {
         String versionName = prefs.getString(LoginActivity.VERSION_NAME, "");
         String versionCode = prefs.getString(LoginActivity.VERSION_CODE, "");*/
         UserRequest userRequest = new UserRequest();
-        userRequest.setUserId(String.valueOf(2));
+        userRequest.setUserId("1");
 
         userRequest.setVersionName("1.0");
         userRequest.setVersionCode("1");
-        userRequest.setSecurityToken("462ed61f-5363-495d-b73e-f50f54af7650");
+        userRequest.setSecurityToken("3837ca03-41dd-402f-8ce5-ea6d74ac0127");
         return userRequest;
     }
 
     private void setRecycler() {
-        OfferRecyclerAdapter recycler = new OfferRecyclerAdapter(getContext(), list);
-        RecyclerView.LayoutManager reLayoutManager = new LinearLayoutManager(getContext());
+        OfferRecyclerAdapter recycler = new OfferRecyclerAdapter(mActivity, list);
+        RecyclerView.LayoutManager reLayoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(reLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recycler);
-        recycler.notifyDataSetChanged();}
+        recycler.notifyDataSetChanged();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_offers, container, false);
+    }
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentActivity) {
+            mActivity = (FragmentActivity) context;
+        }
     }
 }
