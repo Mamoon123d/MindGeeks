@@ -76,6 +76,7 @@ public class OfferActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NotNull Call<OffersListData> call, @NotNull Response<OffersListData> response) {
                     if (response.body() != null) {
+
                         loading.setVisibility(View.GONE);
                         list = new ArrayList<>();
                         list = response.body().getOffers();
