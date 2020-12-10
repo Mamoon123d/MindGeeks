@@ -3,9 +3,12 @@ package com.mindgeeks.offerwall;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import com.mindgeeks.offerwall.model.OffersListData;
 import com.mindgeeks.offerwall.model.UserRequest;
 import com.mindgeeks.offerwall.network.ApiClient;
 import com.mindgeeks.offerwall.utils.Constans;
+import com.mindgeeks.offerwall.utils.NetworkHelper;
 import com.mindgeeks.offerwall.validate.HexColorValidator;
 
 import org.jetbrains.annotations.NotNull;
@@ -64,22 +68,27 @@ public class OfferActivity extends AppCompatActivity {
     }
 
     private void setList() {
-        Call<OffersListData> call= ApiClient.getApiInterface().getOfferList(CreateRequest());
-        call.enqueue(new Callback<OffersListData>() {
-            @Override
-            public void onResponse(@NotNull Call<OffersListData> call, @NotNull Response<OffersListData> response) {
-                if (response.body() != null) {
-                    list = new ArrayList<>();
-                    list = response.body().getOffers();
-                    setRecycler();
+        boolean isNetwork= NetworkHelper.isNetworkAvailable(this);
+        ProgressBar loading=findViewById(R.id.loading_bar);
+        if (isNetwork) {
+            Call<OffersListData> call = ApiClient.getApiInterface().getOfferList(CreateRequest());
+            call.enqueue(new Callback<OffersListData>() {
+                @Override
+                public void onResponse(@NotNull Call<OffersListData> call, @NotNull Response<OffersListData> response) {
+                    if (response.body() != null) {
+                        loading.setVisibility(View.GONE);
+                        list = new ArrayList<>();
+                        list = response.body().getOffers();
+                        setRecycler();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NotNull Call<OffersListData> call, Throwable t) {
+                @Override
+                public void onFailure(@NotNull Call<OffersListData> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }else Toast.makeText(this, "Network Not Available", Toast.LENGTH_SHORT).show();
     }
 
     private void setRecycler() {
