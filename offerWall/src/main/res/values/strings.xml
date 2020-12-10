@@ -7,6 +7,7 @@
     <string name="start_this_offer_now">Start this offer now</string>
     <string name="rupees">₹ </string>
     <string name="upto">Upto</string>
-    <string name="title">Title</string>
     <string name="value">Values</string>
+    <string name="back_button">back button</string>
+    <string name="title">Title</string>
 </resources>

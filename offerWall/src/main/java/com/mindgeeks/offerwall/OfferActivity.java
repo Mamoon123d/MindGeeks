@@ -1,25 +1,32 @@
 package com.mindgeeks.offerwall;
 
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.mindgeeks.offerwall.adapter.OfferRecyclerAdapter;
-import com.mindgeeks.offerwall.fragment.OffersFragment;
 import com.mindgeeks.offerwall.model.OffersListData;
 import com.mindgeeks.offerwall.model.UserRequest;
 import com.mindgeeks.offerwall.network.ApiClient;
+import com.mindgeeks.offerwall.utils.Constans;
+import com.mindgeeks.offerwall.validate.HexColorValidator;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,16 +38,29 @@ public class OfferActivity extends AppCompatActivity {
     List<OffersListData.Offer> list;
     private RecyclerView recyclerView;
     private String securityToken;
-    private String securityToken_Key="securityToken_key";
+    private String securityToken_Key = "securityToken_key";
+    private ConstraintLayout offerWallLayout;
+    ActionBar actionBar;
+    private ImageView back_bt;
+    private TextView title_tv;
+
+    private RelativeLayout toolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
+
         init();
+        actionBar = getSupportActionBar();
         getData();
         setList();
         //loadFragment();
+        setBackButton();
+    }
+
+    private void setBackButton() {
+        back_bt.setOnClickListener(v->finish());
     }
 
     private void setList() {
@@ -72,16 +92,88 @@ public class OfferActivity extends AppCompatActivity {
     }
 
     private void init() {
-        recyclerView=findViewById(R.id.offer_list_recycler);
+        recyclerView = findViewById(R.id.offer_list_recycler);
+        offerWallLayout = findViewById(R.id.offer_wall_layout);
+        //toolBar
+        toolBar = findViewById(R.id.tool_bar);
+        back_bt = findViewById(R.id.back_bt);
+        title_tv = findViewById(R.id.title_tv);
+
+
     }
 
-    private void getData() {
-        Bundle arg=getIntent().getExtras();
-        if (arg!=null) {
-           securityToken= arg.getString(securityToken_Key);
-            Toast.makeText(this, ""+data, Toast.LENGTH_SHORT).show();
+
+    public void getData() {
+        //this.securityToken=str;
+        Bundle arg = getIntent().getExtras();
+        if (arg != null) {
+            securityToken = arg.getString(Constans.SECURITY_TOKEN);
+            if (arg.getString(Constans.PROPERTY_SCREEN_BACKGROUND_COLOR) != null)
+                setBackGround(arg.getString(Constans.PROPERTY_SCREEN_BACKGROUND_COLOR));
+            if (arg.getString(Constans.PROPERTY_TASK_BAR_BACKGROUND_COLOR) != null)
+                setTaskBarBackground(arg.getString(Constans.PROPERTY_TASK_BAR_BACKGROUND_COLOR));
+            if (arg.getString(Constans.PROPERTY_ACTION_BAR_BACKGROUND_COLOR) != null)
+                setActionBarBackground(arg.getString(Constans.PROPERTY_ACTION_BAR_BACKGROUND_COLOR));
+            if (arg.getString(Constans.PROPERTY_ACTION_BAR_TITLE_COLOR) != null)
+                setActionBarTitleColor(arg.getString(Constans.PROPERTY_ACTION_BAR_TITLE_COLOR));
+            if (arg.getString(Constans.PROPERTY_ACTION_BAR_TITLE_TEXT) != null)
+                setActionBarTitleText(arg.getString(Constans.PROPERTY_ACTION_BAR_TITLE_TEXT));
+            if (arg.getString(Constans.PROPERTY_ACTION_BAR_BACK_BUTTON_COLOR) != null)
+                setActionBarBackButtonColor(arg.getString(Constans.PROPERTY_ACTION_BAR_BACK_BUTTON_COLOR));
+
+            //Log.d("TAG", "sdk_property: "+getOfferWallProperties("app","id"));
+
         }
     }
+
+    private void setActionBarBackButtonColor(String color) {
+        boolean isColor=new HexColorValidator().validate(color);
+        if (isColor)back_bt.setColorFilter(Color.parseColor(color));
+
+    }
+
+    private void setActionBarTitleText(String title) {
+        if (title != null)
+            title_tv.setText(title);
+    }
+
+    private void setActionBarTitleColor(String color) {
+        //  actionBar.setTitle(Html.fromHtml("<font color="+color+">"+mTitle+"</font>"));
+        boolean isColor = new HexColorValidator().validate(color);
+        if (isColor) title_tv.setTextColor(Color.parseColor(color));
+
+
+    }
+
+    private void setActionBarBackground(String color) {
+        boolean isColor = new HexColorValidator().validate(color);
+        if (isColor) toolBar.setBackgroundColor(Color.parseColor(color));
+    }
+
+    private void setTaskBarBackground(String color) {
+        boolean isColor = new HexColorValidator().validate(color);
+        if (isColor) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(Color.parseColor(color));
+            }
+        }
+    }
+
+    private void setBackGround(String color) {
+       /* Pattern colorPattern = Pattern.compile("#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})");
+        Matcher m = colorPattern.matcher(color);
+        boolean isColor = m.matches();*/
+        boolean isColor = new HexColorValidator().validate(color);
+        //Log.d("TAG", "setBackGround: "+new HexColorValidator().validate(color));
+        if (isColor) offerWallLayout.setBackgroundColor(Color.parseColor(color));
+    }
+
+    private boolean isColor(String color) {
+        Pattern colorPattern = Pattern.compile("#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})");
+        Matcher m = colorPattern.matcher(color);
+        return m.matches();
+    }
+
     private void loadFragment() {
        /* Fragment fragment;
         fragment = new OffersFragment();

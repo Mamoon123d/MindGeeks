@@ -4,16 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.mindgeeks.offerwall.OfferActivity;
-import com.mindgeeks.offerwall.OffersWall;
 import com.mindgeeks.offerwall.offersList;
-import com.mindgeeks.offerwall.utils.CreateRequest;
+import com.mindgeeks.offerwall.utils.Constans;
+import com.mindgeeks.offerwall.utils.OfferWallHandler;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
@@ -22,11 +20,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent=new Intent(this, OfferActivity.class);
+       // new OfferActivity().getData("3837ca03-41dd-402f-8ce5-ea6d74ac0127");
+
+        Map<String, Object> properties=OfferWallHandler.getOfferWallProperties("3837ca03-41dd-402f-8ce5-ea6d74ac0127","var1");
+        properties.put(Constans.PROPERTY_SCREEN_BACKGROUND_COLOR,"#3700B3");
+        properties.put(Constans.PROPERTY_TASK_BAR_BACKGROUND_COLOR,"#3700B3");
+        properties.put(Constans.PROPERTY_ACTION_BAR_BACKGROUND_COLOR,"#8B8E94");
+        properties.put(Constans.PROPERTY_ACTION_BAR_TITLE_COLOR,"#ffffff");
+        properties.put(Constans.PROPERTY_ACTION_BAR_TITLE_TEXT,"My App");
+        properties.put(Constans.PROPERTY_ACTION_BAR_BACK_BUTTON_COLOR,"#3700B3");
+
+
+        Log.d("TAG", "properties: "+properties);
+        OfferWallHandler wallHandler=new OfferWallHandler(properties,this);
+        wallHandler.startOfferWall();
+
+
+       /* Intent intent=new Intent(this, OfferActivity.class);
         Bundle arg=new Bundle();
         arg.putString("securityToken_key","3837ca03-41dd-402f-8ce5-ea6d74ac0127");
         intent.putExtras(arg);
-        startActivity(intent);
+        startActivity(intent);*/
 
        // loadFragment();
         //getOfferWall();

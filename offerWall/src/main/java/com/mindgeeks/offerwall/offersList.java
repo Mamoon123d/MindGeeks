@@ -38,7 +38,7 @@ public class offersList extends Fragment {
     List<OffersListData.Offer> list;
     private FragmentActivity mActivity;
     private String securityToken;
-    private static final String securityToken_Key = "securityToken";
+    public static final String securityToken_Key = "securityToken";
 
     public offersList() {
         // Required empty public constructor
