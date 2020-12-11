@@ -32,10 +32,10 @@
 
 # Preserve all .class method names.
 
--keepclassmembernames class * {
-    java.lang.Class class$(java.lang.String);
-    java.lang.Class class$(java.lang.String, boolean);
-}
+#-keepclassmembernames class * {
+#    java.lang.Class class$(java.lang.String);
+#    java.lang.Class class$(java.lang.String, boolean);
+#}
 
 # Preserve all native method names and the names of their classes.
 
@@ -62,8 +62,6 @@
     static final java.io.ObjectStreamField[] serialPersistentFields;
     private void writeObject(java.io.ObjectOutputStream);
     private void readObject(java.io.ObjectInputStream);
-
-
 
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
