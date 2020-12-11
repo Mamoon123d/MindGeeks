@@ -6,8 +6,7 @@
 -printmapping out.map
 -keepparameternames
 -renamesourcefileattribute SourceFile
--keepattributes Exceptions,InnerClasses,Signature,Deprecated,
-                SourceFile,LineNumberTable,EnclosingMethod
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,EnclosingMethod
 
 # Preserve all annotations.
 
@@ -19,6 +18,17 @@
 -keep public class * {
     public protected *;
 }
+
+
+-keep class com.mindgeeks.offerwall.model.* { *; }
+-keep class com.mindgeeks.offerwall.utils.Constans { *; }
+-keep class com.mindgeeks.offerwall.utils.OfferWallHandler {
+    <fields>;
+    <init>();
+   public <methods>;
+    static getOfferWallProperties(java.lang.String,java.lang.String);
+}
+
 
 # Preserve all .class method names.
 
@@ -52,6 +62,9 @@
     static final java.io.ObjectStreamField[] serialPersistentFields;
     private void writeObject(java.io.ObjectOutputStream);
     private void readObject(java.io.ObjectInputStream);
+
+
+
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
