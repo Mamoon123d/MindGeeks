@@ -21,7 +21,7 @@
 
 
 -keep class com.mindgeeks.offerwall.model.* { *; }
--keep class com.mindgeeks.offerwall.utils.Constans { *; }
+-keep class com.mindgeeks.offerwall.utils.Constans.* { *; }
 -keep class com.mindgeeks.offerwall.utils.OfferWallHandler {
     <fields>;
     <init>();
