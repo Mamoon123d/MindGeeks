@@ -21,13 +21,13 @@
 
 
 -keep class com.mindgeeks.offerwall.model.* { *; }
--keep class com.mindgeeks.offerwall.utils.Constans.* { *; }
--keep class com.mindgeeks.offerwall.utils.OfferWallHandler {
-    <fields>;
-    <init>();
-   public <methods>;
-    static getOfferWallProperties(java.lang.String,java.lang.String);
-}
+-keep class com.mindgeeks.offerwall.utils.* { *; }
+#-keep class com.mindgeeks.offerwall.utils.OfferWallHandler {
+#    <fields>;
+#    <init>();
+#   public <methods>;
+#    static getOfferWallProperties(java.lang.String,java.lang.String);
+#}
 
 
 # Preserve all .class method names.
